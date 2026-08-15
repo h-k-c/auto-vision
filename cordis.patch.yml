@@ -1,0 +1,7 @@
+# auto-vision bundle patch —— 供 DSH loader 安装本插件
+# 市场（plugin.dshdesk.com）自动发现要求：仓库根目录 package.json 声明
+# dsh.bundle.patch 指向本文件，且路径必须为仓库内的安全相对路径。
+
+- insert:
+    - id: auto-vision
+      name: auto-vision

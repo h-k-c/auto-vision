@@ -1,0 +1,9 @@
+# 依赖与构建产物
+node_modules/
+*.tgz
+*.log
+
+# 系统与编辑器
+.DS_Store
+.idea/
+.vscode/

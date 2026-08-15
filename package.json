@@ -1,0 +1,46 @@
+{
+  "name": "auto-vision",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "index.mjs",
+  "exports": {
+    ".": "./index.mjs"
+  },
+  "files": [
+    "index.mjs",
+    "cordis.patch.yml",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "dsh": {
+    "bundle": {
+      "patch": "./cordis.patch.yml"
+    }
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "description": "DSH（DeepSeek Harness）图片一体化插件：粘贴图片只进对话不进模型请求（llm/stream 清洗），并注册 see_image 工具让文本模型通过任意 OpenAI 兼容视觉 API 按需看图",
+  "keywords": [
+    "dsh",
+    "deepseek-harness",
+    "plugin",
+    "vision",
+    "image",
+    "see-image",
+    "sanitize",
+    "llm"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "js-yaml": "^4.1.0"
+  },
+  "peerDependencies": {
+    "@deepseek-ai/dsh-tools": ">=0.1.0"
+  },
+  "scripts": {
+    "test": "node test.mjs"
+  },
+  "author": "openorange <2605245956@qq.com>"
+}
