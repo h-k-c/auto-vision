@@ -24,8 +24,6 @@
 
 ![使用演示](assets/demo.gif)
 
-> 想要更清晰、带声音的版本？[下载 demo.mp4](assets/demo.mp4)
-
 ## 安装
 
 1. 把本目录拷到 DSH profile 的 `node_modules` 下（如 `~/.dsh/profiles/web/node_modules/auto-vision/`）。
