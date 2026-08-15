@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="300" viewBox="0 0 1200 300">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#181411"/>
+      <stop offset="1" stop-color="#241f1a"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#60A5FA"/>
+      <stop offset="1" stop-color="#34D399"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="300" rx="24" fill="url(#bg)"/>
+  <!-- 图片图标 -->
+  <g transform="translate(90, 90)">
+    <rect width="120" height="120" rx="14" fill="none" stroke="#F5F2EF" stroke-width="5" opacity="0.9"/>
+    <circle cx="52" cy="52" r="20" fill="#60A5FA" opacity="0.85"/>
+    <path d="M18 96 L44 64 L64 84 L84 58 L108 96 Z" fill="#34D399" opacity="0.85"/>
+  </g>
+  <!-- 箭头 -->
+  <path d="M240 150 h40" stroke="#F5F2EF" stroke-width="6" stroke-linecap="round" opacity="0.5"/>
+  <path d="M280 143 l16 7 -16 7 Z" fill="#F5F2EF" opacity="0.5"/>
+  <!-- 文字气泡 -->
+  <g transform="translate(320, 78)">
+    <rect width="300" height="144" rx="18" fill="#2a241e" stroke="#F5F2EF" stroke-width="3" opacity="0.95"/>
+    <circle cx="26" cy="132" r="12" fill="#2a241e" stroke="#F5F2EF" stroke-width="3"/>
+    <text x="30" y="52" font-family="'PingFang SC','Noto Sans SC',sans-serif" font-size="22" fill="#F5F2EF">[图片] 用户粘贴了一张图片，</text>
+    <text x="30" y="86" font-family="'PingFang SC','Noto Sans SC',sans-serif" font-size="22" fill="#F5F2EF">如需了解内容请调用 see_image 工具。</text>
+    <text x="30" y="122" font-family="'PingFang SC','Noto Sans SC',sans-serif" font-size="15" fill="#9CA3AF">（图片原样保留在你的气泡里）</text>
+  </g>
+  <!-- 眼睛 -->
+  <g transform="translate(690, 105)" fill="none" stroke="#60A5FA" stroke-width="6" stroke-linecap="round">
+    <path d="M20 45 C60 5 120 5 160 45 C120 85 60 85 20 45 Z" fill="rgba(96,165,250,0.15)"/>
+    <circle cx="90" cy="45" r="22" fill="#60A5FA" opacity="0.9"/>
+    <circle cx="90" cy="45" r="9" fill="#181411"/>
+  </g>
+  <!-- 标题 -->
+  <text x="700" y="220" font-family="'PingFang SC','Noto Sans SC',sans-serif" font-size="64" font-weight="700" fill="#F5F2EF">auto-vision</text>
+  <text x="702" y="262" font-family="'PingFang SC','Noto Sans SC',sans-serif" font-size="24" fill="#9CA3AF">粘贴即对话 · 图片不进模型 · 需要时自己看图</text>
+  <rect x="700" y="278" width="330" height="5" rx="2.5" fill="url(#accent)"/>
+</svg>

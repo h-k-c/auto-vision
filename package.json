@@ -11,7 +11,8 @@
     "cordis.patch.yml",
     "README.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "CHANGELOG.md",
+    "assets/hero.svg"
   ],
   "dsh": {
     "bundle": {
