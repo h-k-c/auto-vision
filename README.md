@@ -37,17 +37,23 @@ unknown variant `image_url`, expected `text`
 
 ## 安装
 
-方式一（npm，推荐）：
+方式一（GitHub 市场 / Registry，推荐）：
+
+```bash
+dsh plugin --profile web add github:h-k-c/auto-vision
+```
+
+方式二（npm）：
 
 ```bash
 npm install auto-vision
 # 然后拷到 DSH profile 的 node_modules 下，或在 profile 里以本地依赖方式引用
 ```
 
-方式二（直接拷贝）：把本目录拷到你的 DSH profile 的 `node_modules` 下
+方式三（直接拷贝）：把本目录拷到你的 DSH profile 的 `node_modules` 下
 （例如 `~/.dsh/profiles/web/node_modules/auto-vision/`）。
 
-然后（两种方式都需要）在 profile 的 `cordis.patch.yml`（或等价组合文件）中插入：
+然后（所有方式都需要）在 profile 的 `cordis.patch.yml`（或等价组合文件）中插入：
 
 ```yaml
 - insert:
