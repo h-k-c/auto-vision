@@ -25,9 +25,10 @@
 //
 // 配置（优先级：插件 config > 环境变量 > 默认值）：
 //   键              config 字段      环境变量                默认值
+//   视觉源预设      provider         VISION_PROVIDER        modelscope（zhipu 可切智谱免费档）
 //   看图工具开关    tool             VISION_TOOL(0/false)    true
-//   API 地址        endpoint         VISION_ENDPOINT        魔搭 api-inference
-//   模型列表        models           VISION_MODEL(单个)     [Qwen3-VL-235B, Qwen3-VL-8B]
+//   API 地址        endpoint         VISION_ENDPOINT        随 provider 预设
+//   模型列表        models           VISION_MODEL(单个)     随 provider 预设
 //   高端模型别名    heavyModels      -                      {heavy/internvl: InternVL3.5-241B}
 //   最大输出 token  maxTokens        VISION_MAX_TOKENS      1500
 //   图片大小上限    maxFileBytes     VISION_MAX_FILE_BYTES  10MB
@@ -60,10 +61,25 @@ import { defineTool } from '@deepseek-ai/dsh-tools';
 // 配置
 // ---------------------------------------------------------------------------
 
+// 内置免费视觉源预设：一键切换，无需手填 endpoint/models。
+//   modelscope —— 魔搭社区 api-inference 免费档（默认）
+//   zhipu     —— 智谱 BigModel 开放平台免费档（glm-4v-flash）
+// 切换方式：config.provider 或环境变量 VISION_PROVIDER（zhipu | modelscope）。
+const PROVIDERS = Object.freeze({
+  modelscope: Object.freeze({
+    endpoint: 'https://api-inference.modelscope.cn/v1/chat/completions',
+    models: ['Qwen/Qwen3-VL-235B-A22B-Instruct', 'Qwen/Qwen3-VL-8B-Instruct'],
+  }),
+  zhipu: Object.freeze({
+    endpoint: 'https://open.bigmodel.cn/api/paas/v4/chat/completions',
+    models: ['glm-4v-flash', 'glm-4v-plus'],
+  }),
+});
+
 const DEFAULT_CONFIG = Object.freeze({
   tool: true,
-  endpoint: 'https://api-inference.modelscope.cn/v1/chat/completions',
-  models: ['Qwen/Qwen3-VL-235B-A22B-Instruct', 'Qwen/Qwen3-VL-8B-Instruct'],
+  provider: 'modelscope',
+  ...PROVIDERS.modelscope,
   heavyModels: Object.freeze({
     heavy: 'OpenGVLab/InternVL3_5-241B-A28B',
     internvl: 'OpenGVLab/InternVL3_5-241B-A28B',
@@ -113,15 +129,21 @@ function dshHome() {
   return readEnv('DSH_HOME') || join(homedir(), '.dsh');
 }
 
-/** 合并插件 config（apply 第二参）与环境变量覆盖，产出最终配置。 */
+/**
+* 合并配置：内置免费视觉源预设（provider）< 插件 config < 环境变量。
+* provider 一键切换智谱/魔搭免费档，也可用 endpoint/models 完全自定义。
+*/
 function resolveConfig(config) {
-  const cfg = { ...DEFAULT_CONFIG, ...(config && typeof config === 'object' ? config : {}) };
+  const raw = config && typeof config === 'object' ? config : {};
+  const provider = String(raw.provider || readEnv('VISION_PROVIDER') || 'modelscope').trim().toLowerCase();
+  const preset = PROVIDERS[provider] || {};
+  const cfg = { ...DEFAULT_CONFIG, ...preset, ...raw };
   for (const [key, env] of Object.entries(ENV_MAP)) {
-    const raw = readEnv(env);
-    if (!raw) continue;
-    if (key === 'endpoint') cfg.endpoint = raw;
+    const value = readEnv(env);
+    if (!value) continue;
+    if (key === 'endpoint') cfg.endpoint = value;
     else {
-      const num = Number(raw);
+      const num = Number(value);
       if (Number.isFinite(num) && num > 0) cfg[key] = num;
     }
   }

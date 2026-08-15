@@ -221,7 +221,39 @@ const tmpFile = (bytes = 4096) => {
   pass('环境变量覆盖配置');
 }
 
-// 11) pre-step 决策原样透传
+// 11) provider 预设一键切换：zhipu（config 与 VISION_PROVIDER 环境变量）
+{
+  reset();
+  const ctx = makeCtx();
+  apply(ctx, { provider: 'zhipu', apiKey: 'k' });
+  const file = tmpFile();
+  const out = await toolDef.execute({ file_path: file });
+  unlinkSync(file);
+  if (!out.ok) fail('zhipu provider 看图', JSON.stringify(out).slice(0, 120));
+  const req = sentBodies[0];
+  if (req.url !== 'https://open.bigmodel.cn/api/paas/v4/chat/completions') fail('zhipu endpoint', req.url);
+  if (req.body.model !== 'glm-4v-flash') fail('zhipu 默认模型', req.body.model);
+  pass('provider: zhipu 一键切换（智谱免费档）');
+
+  reset();
+  process.env.VISION_PROVIDER = 'zhipu';
+  const ctx2 = makeCtx();
+  apply(ctx2, { apiKey: 'k' });
+  const out2 = await toolDef.execute({ file_path: tmpFile() });
+  if (!out2.ok || out2.model !== 'glm-4v-flash') fail('VISION_PROVIDER 环境变量', JSON.stringify(out2).slice(0, 120));
+  delete process.env.VISION_PROVIDER;
+  pass('VISION_PROVIDER 环境变量切换');
+
+  // 未知 provider 回退默认（魔搭），显式 endpoint/models 仍可覆盖
+  reset();
+  const ctx3 = makeCtx();
+  apply(ctx3, { provider: 'unknown', apiKey: 'k', endpoint: 'http://localhost:1/v1', models: ['m'] });
+  const out3 = await toolDef.execute({ file_path: tmpFile() });
+  if (!out3.ok || out3.model !== 'm') fail('自定义覆盖', JSON.stringify(out3).slice(0, 120));
+  pass('未知 provider 回退默认 + 显式 endpoint/models 覆盖');
+}
+
+// 12) pre-step 决策原样透传
 {
   reset();
   const ctx = makeCtx();
