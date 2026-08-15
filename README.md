@@ -22,7 +22,9 @@
 
 录制于 DeepSeek Harness Web 界面：粘贴图片 → 对话正常继续 → 模型自动调用视觉模型读取图片内容。
 
-![](https://raw.githubusercontent.com/h-k-c/auto-vision/main/assets/demo.mp4)
+![](assets/demo.mp4)
+
+> 视频无法播放？[直接下载 demo.mp4](assets/demo.mp4)
 
 ## 安装
 
