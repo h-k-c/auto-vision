@@ -263,6 +263,21 @@ const tmpFile = (bytes = 4096) => {
   pass('pre-step 决策透传');
 }
 
+// 13) 附件未落盘竞态：记录侧不校验文件存在（新图路径必须进槽，读取侧兜底）
+{
+  reset();
+  const ctx = makeCtx();
+  apply(ctx, {});
+  const ghostId = 'sha256:' + 'f'.repeat(64); // 文件不存在的附件
+  await ctx.listeners['agent/pre-step'].cb({}, () => Promise.resolve({
+    kind: 'enter',
+    messages: [{ content: [{ type: 'image', attachment: { attachmentId: ghostId } }] }],
+  }));
+  const paths = globalThis.__dshVisionLatest.paths;
+  if (!paths.some((p) => p.includes('f'.repeat(64)))) fail('未落盘路径记录', JSON.stringify(paths));
+  pass('附件未落盘时路径仍进槽（不再被 existsSync 丢弃）');
+}
+
 // 恢复环境
 for (const k of ENV_KEYS) {
   if (savedEnv[k] === undefined) delete process.env[k];

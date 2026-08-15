@@ -210,14 +210,19 @@ function imagePathFromRef(att) {
   return join(dshHome(), 'attachments', 'v1', 'objects', hex.slice(0, 2), hex);
 }
 
-/** 收集一组 content blocks 里的图片本地路径（仅存在的文件）。 */
+/**
+* 收集一组 content blocks 里的图片本地路径。
+* 注意：记录侧**不校验文件是否已存在**——附件文件刚上传时可能尚未落盘，
+* 若此时用 existsSync 过滤会把新图路径永久丢掉，see_image 就会一直拿到旧图；
+* 存在性校验统一交给读取侧（resolveImagePath 会跳过不存在的路径）。
+*/
 function collectImagePaths(content) {
   if (!Array.isArray(content)) return [];
   const out = [];
   for (const block of content) {
     if (block && block.type === 'image' && block.attachment) {
       const path = imagePathFromRef(block.attachment);
-      if (path && existsSync(path)) out.push(path);
+      if (path) out.push(path);
     }
   }
   return out;
@@ -243,7 +248,7 @@ function replaceImageBlocks(blocks, note, collected) {
     if (!block || typeof block !== 'object') { out.push(block); continue; }
     if (block.type === 'image') {
       const path = imagePathFromRef(block.attachment);
-      if (path && existsSync(path)) collected.push(path);
+      if (path) collected.push(path); // 同 collectImagePaths：不校验落盘，读取侧兜底
       out.push({ type: 'text', text: note });
     } else if (block.type === 'tool-result' && Array.isArray(block.content)) {
       out.push({ ...block, content: replaceImageBlocks(block.content, note, collected) });
