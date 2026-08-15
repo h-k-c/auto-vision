@@ -22,9 +22,9 @@
 
 录制于 DeepSeek Harness Web 界面：粘贴图片 → 对话正常继续 → 模型自动调用视觉模型读取图片内容。
 
-![](assets/demo.mp4)
+![使用演示](assets/demo.gif)
 
-> 视频无法播放？[直接下载 demo.mp4](assets/demo.mp4)
+> 想要更清晰、带声音的版本？[下载 demo.mp4](assets/demo.mp4)
 
 ## 安装
 
