@@ -5,9 +5,10 @@
 <h1 align="center">auto-vision</h1>
 
 <p align="center">
-  贴图不会让对话报错，模型需要时自动看图。
+  贴图不会让对话报错，图片在<b>聊天窗口里正常显示</b>；
   <br/>
-  支持<b>智谱 / 魔搭社区的免费视觉模型</b>，也支持你自己的任意 OpenAI 兼容平台。
+  模型<b>自动判断</b>是否需要看图，需要时自己调用视觉模型读取内容 ——
+  <b>免费</b>，支持智谱 / 魔搭社区的免费视觉模型，也支持你自己的任意 OpenAI 兼容平台。
 </p>
 
 <p align="center">
@@ -67,20 +68,6 @@ export VISION_PROVIDER=zhipu      # 环境变量方式
   config:
     endpoint: http://127.0.0.1:11434/v1/chat/completions
     models: [qwen2.5-vl:7b]
-```
-
-## see_image 工具
-
-模型需要看图时自动调用，参数都可省略：
-
-- `file_path`：图片路径（省略 = 自动用最近一张粘贴图）
-- `question`：想从图中获取的信息
-- `model`：视觉模型 ID 或 `heavy`（高端）
-
-## 开发
-
-```bash
-npm install && npm test   # 14 项自包含单元测试
 ```
 
 ## License
