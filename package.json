@@ -12,7 +12,8 @@
     "README.md",
     "LICENSE",
     "CHANGELOG.md",
-    "assets/hero.svg"
+    "assets/hero.svg",
+    "assets/demo.mp4"
   ],
   "dsh": {
     "bundle": {
@@ -46,7 +47,7 @@
   "author": "openorange <2605245956@qq.com>",
   "repository": {
     "type": "git",
-    "url": "https://github.com/h-k-c/auto-vision.git"
+    "url": "git+https://github.com/h-k-c/auto-vision.git"
   },
   "bugs": {
     "url": "https://github.com/h-k-c/auto-vision/issues"

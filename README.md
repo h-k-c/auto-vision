@@ -18,6 +18,10 @@
 
 ---
 
+## 演示
+
+![](assets/demo.mp4)
+
 ## 安装
 
 1. 把本目录拷到 DSH profile 的 `node_modules` 下（如 `~/.dsh/profiles/web/node_modules/auto-vision/`）。
